@@ -3,733 +3,998 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AltitudeAI - Industrial Intelligence Platform</title>
+    <title>AltitudeAI — Industrial Intelligence Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
         :root {
-            /* AltitudeXR Brand Colors */
-            --primary: #EE1B24;
-            --primary-dark: #B11016;
-            --secondary: #B11016;
-            
-            /* Contrast tones */
+            --red: #EE1B24;
+            --red-dark: #B11016;
             --slate: #1D1D1D;
             --white: #FFFFFF;
-            
-            /* Grey tones */
             --gray-1: #262626;
             --gray-2: #404040;
             --gray-3: #7F7F7F;
             --gray-4: #C4C4C4;
-            
-            /* Functional colors */
+            --gray-5: #F0F0F0;
             --success: #10b981;
             --warning: #f59e0b;
             --info: #3b82f6;
-            
-            /* Backgrounds */
-            --bg: #f8f9fa;
-            --card: #ffffff;
-            --text: #1D1D1D;
-            --text-light: #7F7F7F;
-            --border: #C4C4C4;
+            --purple: #7c3aed;
+            --bg: #F5F5F5;
+            --card: #FFFFFF;
+            --border: #E0E0E0;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--bg);
-            color: var(--text);
+            color: var(--slate);
             line-height: 1.6;
         }
-        
-        /* Header */
+
+        /* ── HEADER ── */
         .header {
             background: var(--white);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-bottom: 2px solid var(--border);
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
-        
-        .header-content {
-            max-width: 1400px;
+
+        .header-inner {
+            max-width: 1440px;
             margin: 0 auto;
+            height: 64px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 10px;
         }
-        
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
+
+        .logo-mark {
+            width: 36px;
+            height: 36px;
+            background: var(--red);
             border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+            display: grid;
+            place-items: center;
         }
-        
-        .logo-icon::before {
-            content: "";
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-bottom: 16px solid var(--white);
-            transform: rotate(-15deg);
-        }
-        
-        .logo-icon::after {
-            content: "";
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-bottom: 12px solid var(--primary);
-            transform: rotate(-15deg) translate(2px, 2px);
-        }
-        
-        .logo-text {
-            font-size: 1.5rem;
+
+        .logo-mark svg { width: 20px; height: 20px; }
+
+        .logo-name {
+            font-size: 1.4rem;
             font-weight: 700;
-            color: var(--slate);
             letter-spacing: -0.5px;
+            color: var(--slate);
         }
-        
-        .logo-text span {
-            color: var(--primary);
+
+        .logo-name span { color: var(--red); }
+
+        .logo-pill {
+            background: linear-gradient(135deg, var(--purple), var(--info));
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
-        
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-        
-        .nav-links a {
+
+        .nav { display: flex; gap: 1.75rem; }
+        .nav a {
+            font-size: 0.875rem;
+            font-weight: 500;
             color: var(--gray-2);
             text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.2s;
+            transition: color 0.15s;
         }
-        
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-        
-        /* Main Container */
+        .nav a:hover { color: var(--red); }
+
+        /* ── LAYOUT ── */
         .container {
-            max-width: 1400px;
+            max-width: 1440px;
             margin: 0 auto;
             padding: 2rem;
         }
-        
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+
+        /* ── AI SEARCH HERO ── */
+        .search-hero {
+            background: linear-gradient(135deg, var(--slate) 0%, #2d2d2d 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .search-hero::before {
+            content: '';
+            position: absolute;
+            top: -40px; right: -40px;
+            width: 200px; height: 200px;
+            background: rgba(238, 27, 36, 0.08);
+            border-radius: 50%;
+        }
+
+        .search-hero-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .search-hero-label::before {
+            content: '';
+            display: inline-block;
+            width: 6px; height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .search-row {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .ai-input {
+            flex: 1;
+            padding: 0.875rem 1.25rem;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            color: white;
+            font-size: 0.9rem;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .ai-input:focus {
+            outline: none;
+            border-color: rgba(238, 27, 36, 0.6);
+            background: rgba(255,255,255,0.12);
+        }
+
+        .ai-input::placeholder { color: rgba(255,255,255,0.35); }
+
+        .ai-btn {
+            padding: 0.875rem 1.75rem;
+            background: var(--red);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            transition: background 0.15s, transform 0.1s;
+        }
+
+        .ai-btn:hover { background: var(--red-dark); transform: translateY(-1px); }
+        .ai-btn:active { transform: translateY(0); }
+
+        .search-hints {
+            margin-top: 0.75rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hint-chip {
+            padding: 4px 12px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.55);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .hint-chip:hover {
+            background: rgba(255,255,255,0.14);
+            color: rgba(255,255,255,0.85);
+        }
+
+        /* ── AI STATUS BANNER ── */
+        .ai-status {
+            display: none;
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 10px;
+            padding: 0.75rem 1.25rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            color: #856404;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ai-status.visible { display: flex; }
+
+        /* ── STATS ── */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
         .stat-card {
             background: var(--card);
-            padding: 1.5rem;
             border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            border-left: 4px solid var(--primary);
-            transition: transform 0.2s, box-shadow 0.2s;
+            padding: 1.25rem 1.5rem;
+            border-left: 4px solid var(--red);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
         }
-        
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        .stat-card.signals { border-left-color: var(--success); }
-        .stat-card.hiring { border-left-color: var(--info); }
-        .stat-card.contracts { border-left-color: var(--warning); }
-        
+
+        .stat-card.green  { border-left-color: var(--success); }
+        .stat-card.purple { border-left-color: var(--purple); }
+        .stat-card.amber  { border-left-color: var(--warning); }
+
         .stat-label {
-            font-size: 0.875rem;
-            color: var(--text-light);
+            font-size: 0.7rem;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
+            letter-spacing: 0.08em;
+            color: var(--gray-3);
+            margin-bottom: 4px;
         }
-        
+
         .stat-value {
-            font-size: 2.25rem;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--slate);
+            line-height: 1;
+        }
+
+        /* ── AI INSIGHTS ── */
+        .insights-section {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1.25rem;
+        }
+
+        .section-title {
+            font-size: 1rem;
             font-weight: 700;
             color: var(--slate);
         }
-        
-        /* Filters Section */
-        .filters-section {
-            background: var(--card);
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            margin-bottom: 2rem;
+
+        .section-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
-        
-        .filters-grid {
+
+        .badge-purple { background: #ede9fe; color: var(--purple); }
+        .badge-green  { background: #d1fae5; color: #065f46; }
+
+        .insights-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.875rem;
         }
-        
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+
+        .insight-card {
+            padding: 1rem;
+            background: var(--gray-5);
+            border-radius: 10px;
+            border-left: 3px solid var(--purple);
         }
-        
-        .filter-group label {
+
+        .insight-type {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--purple);
+            margin-bottom: 4px;
+        }
+
+        .insight-title {
             font-size: 0.875rem;
             font-weight: 600;
-            color: var(--gray-1);
+            color: var(--slate);
+            margin-bottom: 4px;
         }
-        
-        .filter-group select,
-        .filter-group input {
-            padding: 0.75rem;
+
+        .insight-desc {
+            font-size: 0.8rem;
+            color: var(--gray-2);
+            line-height: 1.5;
+        }
+
+        .insight-confidence {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 8px;
+            font-size: 0.72rem;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        /* ── FILTERS ── */
+        .filters-section {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .filter-group { display: flex; flex-direction: column; gap: 5px; }
+
+        .filter-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-2);
+        }
+
+        .filter-select {
+            padding: 0.625rem 0.75rem;
             border: 1px solid var(--border);
             border-radius: 8px;
-            font-size: 0.875rem;
-            background: var(--white);
+            font-size: 0.8rem;
             font-family: 'Poppins', sans-serif;
-            color: var(--gray-1);
+            background: white;
+            color: var(--slate);
+            cursor: pointer;
         }
-        
-        .filter-group select:focus,
-        .filter-group input:focus {
+
+        .filter-select:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(238, 27, 36, 0.1);
+            border-color: var(--red);
+            box-shadow: 0 0 0 2px rgba(238, 27, 36, 0.1);
         }
-        
-        .btn {
-            padding: 0.875rem 1.5rem;
+
+        .filter-btn {
+            padding: 0.625rem 1.25rem;
+            background: var(--red);
+            color: white;
             border: none;
             border-radius: 8px;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 0.8rem;
             font-family: 'Poppins', sans-serif;
-            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.15s;
         }
-        
-        .btn-primary {
-            background: var(--primary);
-            color: var(--white);
-        }
-        
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(238, 27, 36, 0.3);
-        }
-        
-        /* Results Section */
+
+        .filter-btn:hover { background: var(--red-dark); }
+
+        /* ── RESULTS ── */
         .results-section {
             background: var(--card);
             border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
             overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
         }
-        
+
         .results-header {
-            padding: 1.5rem;
+            padding: 1.25rem 1.5rem;
             border-bottom: 1px solid var(--border);
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
         }
-        
-        .results-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--slate);
-        }
-        
-        .results-count {
-            color: var(--text-light);
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-        
-        .company-list {
-            max-height: 600px;
-            overflow-y: auto;
-        }
-        
+
+        .results-title { font-size: 1rem; font-weight: 700; }
+        .results-meta { font-size: 0.8rem; color: var(--gray-3); }
+
+        /* ── COMPANY CARD ── */
         .company-card {
             padding: 1.5rem;
             border-bottom: 1px solid var(--border);
-            transition: background 0.2s;
+            transition: background 0.15s;
         }
-        
-        .company-card:hover {
-            background: #fafafa;
-        }
-        
-        .company-card:last-child {
-            border-bottom: none;
-        }
-        
-        .company-header {
+
+        .company-card:last-child { border-bottom: none; }
+        .company-card:hover { background: #FAFAFA; }
+
+        .company-top {
             display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 1rem;
+            gap: 1.25rem;
+            align-items: flex-start;
         }
-        
+
+        .company-body { flex: 1; min-width: 0; }
+
         .company-name {
-            font-size: 1.125rem;
+            font-size: 1rem;
             font-weight: 700;
             color: var(--slate);
-            margin-bottom: 0.25rem;
+            margin-bottom: 4px;
         }
-        
+
         .company-meta {
             display: flex;
             gap: 1rem;
-            font-size: 0.875rem;
-            color: var(--text-light);
             flex-wrap: wrap;
+            font-size: 0.78rem;
+            color: var(--gray-3);
+            margin-bottom: 0.875rem;
         }
-        
-        .company-meta span {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
+
+        /* Intent Score Widget */
+        .intent-box {
+            text-align: center;
+            min-width: 90px;
+            background: var(--gray-5);
+            border-radius: 10px;
+            padding: 0.875rem 0.75rem;
+            border: 1px solid var(--border);
+            flex-shrink: 0;
         }
-        
-        .signal-badges {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
+
+        .intent-number {
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1;
         }
-        
-        .signal-badge {
-            padding: 0.35rem 0.875rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
+
+        .intent-number.high   { color: var(--success); }
+        .intent-number.medium { color: var(--warning); }
+        .intent-number.low    { color: var(--gray-3); }
+
+        .intent-label {
+            font-size: 0.6rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            color: var(--gray-3);
+            margin-top: 2px;
         }
-        
-        .signal-badge.hiring {
-            background: #dbeafe;
-            color: #1e40af;
+
+        .intent-bar {
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
         }
-        
-        .signal-badge.contract {
-            background: #fef3c7;
-            color: #92400e;
+
+        .intent-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.6s ease;
         }
-        
-        .signal-badge.expansion {
-            background: #fee2e2;
-            color: #991b1b;
+
+        .intent-fill.high   { background: var(--success); }
+        .intent-fill.medium { background: var(--warning); }
+        .intent-fill.low    { background: var(--gray-4); }
+
+        /* AI Summary */
+        .ai-summary {
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+            border-left: 3px solid var(--purple);
+            border-radius: 8px;
+            padding: 0.875rem 1rem;
+            margin-bottom: 0.875rem;
         }
-        
-        .signal-badge.tech_mention {
-            background: #d1fae5;
-            color: #065f46;
+
+        .ai-summary-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--purple);
+            margin-bottom: 4px;
         }
-        
-        .signals-list {
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border);
+
+        .ai-summary-text {
+            font-size: 0.8rem;
+            color: var(--gray-1);
+            line-height: 1.6;
         }
-        
+
+        /* Recommendation */
+        .ai-recommendation {
+            font-size: 0.8rem;
+            color: var(--gray-1);
+            background: #f0fdf4;
+            border-left: 3px solid var(--success);
+            border-radius: 6px;
+            padding: 0.625rem 0.875rem;
+            margin-bottom: 0.875rem;
+        }
+
+        /* Signal Badges */
+        .badge-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 0.875rem; }
+
+        .signal-badge {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .signal-badge.hiring       { background: #dbeafe; color: #1d4ed8; }
+        .signal-badge.contract     { background: #fef9c3; color: #a16207; }
+        .signal-badge.expansion    { background: #fee2e2; color: #b91c1c; }
+        .signal-badge.tech_mention { background: #d1fae5; color: #065f46; }
+
+        /* Signal List */
+        .signals-list { border-top: 1px solid var(--border); padding-top: 0.875rem; }
+
         .signal-item {
             display: flex;
-            gap: 1rem;
-            padding: 0.875rem;
-            background: #f8f9fa;
+            gap: 0.875rem;
+            padding: 0.75rem;
+            background: var(--gray-5);
             border-radius: 8px;
             margin-bottom: 0.5rem;
-            font-size: 0.875rem;
+            font-size: 0.8rem;
         }
-        
-        .signal-type-icon {
+
+        .signal-icon {
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: grid;
+            place-items: center;
             font-size: 0.875rem;
             flex-shrink: 0;
         }
-        
-        .signal-type-icon.hiring { background: #dbeafe; color: #1e40af; }
-        .signal-type-icon.contract { background: #fef3c7; color: #92400e; }
-        .signal-type-icon.expansion { background: #fee2e2; color: #991b1b; }
-        .signal-type-icon.tech_mention { background: #d1fae5; color: #065f46; }
-        
-        .signal-content {
-            flex: 1;
-        }
-        
-        .signal-source {
-            color: var(--text-light);
+
+        .signal-icon.hiring       { background: #dbeafe; }
+        .signal-icon.contract     { background: #fef9c3; }
+        .signal-icon.expansion    { background: #fee2e2; }
+        .signal-icon.tech_mention { background: #d1fae5; }
+
+        .signal-body { flex: 1; }
+        .signal-desc { color: var(--slate); margin-bottom: 2px; }
+        .signal-source { font-size: 0.72rem; color: var(--gray-3); }
+
+        .signal-ai-insight {
             font-size: 0.75rem;
-            margin-top: 0.25rem;
+            color: var(--purple);
+            font-style: italic;
+            margin-top: 4px;
         }
-        
-        .confidence-score {
+
+        .confidence-col {
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.75rem;
-            color: var(--text-light);
-            font-weight: 500;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+            font-size: 0.72rem;
+            color: var(--gray-3);
+            flex-shrink: 0;
         }
-        
-        .confidence-bar {
-            width: 60px;
+
+        .conf-bar {
+            width: 52px;
             height: 4px;
-            background: var(--gray-4);
+            background: var(--border);
             border-radius: 2px;
             overflow: hidden;
         }
-        
-        .confidence-fill {
+
+        .conf-fill {
             height: 100%;
             background: var(--success);
             border-radius: 2px;
         }
-        
-        /* Loading State */
-        .loading {
-            text-align: center;
+
+        /* ── STATES ── */
+        .loading-state, .empty-state {
             padding: 3rem;
-            color: var(--text-light);
+            text-align: center;
+            color: var(--gray-3);
         }
-        
+
         .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--gray-4);
-            border-top-color: var(--primary);
+            width: 36px;
+            height: 36px;
+            border: 3px solid var(--border);
+            border-top-color: var(--red);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 0.8s linear infinite;
             margin: 0 auto 1rem;
         }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .filters-grid { grid-template-columns: repeat(3, 1fr); }
+            .insights-grid { grid-template-columns: 1fr; }
         }
-        
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-light);
-        }
-        
-        .empty-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-        
-        /* Responsive */
+
         @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .nav-links {
-                gap: 1rem;
-            }
-            
-            .container {
-                padding: 1rem;
-            }
-            
-            .company-header {
-                flex-direction: column;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
+            .stats-row { grid-template-columns: 1fr 1fr; }
+            .filters-grid { grid-template-columns: 1fr 1fr; }
+            .search-row { flex-direction: column; }
+            .company-top { flex-direction: column-reverse; }
+            .intent-box { width: 100%; }
+            .nav { display: none; }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-content">
-            <div class="logo">
-                <div class="logo-icon"></div>
-                <div class="logo-text">Altitude<span>AI</span></div>
-            </div>
-            <nav class="nav-links">
-                <a href="#">Dashboard</a>
-                <a href="#">Companies</a>
-                <a href="#">Signals</a>
-            </nav>
-        </div>
-    </header>
 
-    <main class="container">
-        <!-- Stats Grid -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-label">Total Companies</div>
-                <div class="stat-value" id="stat-companies">-</div>
+<header class="header">
+    <div class="header-inner">
+        <div class="logo">
+            <div class="logo-mark">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 17 9 11 13 15 22 6"/>
+                    <polyline points="14 6 22 6 22 14"/>
+                </svg>
             </div>
-            <div class="stat-card signals">
-                <div class="stat-label">Active Signals</div>
-                <div class="stat-value" id="stat-signals">-</div>
-            </div>
-            <div class="stat-card hiring">
-                <div class="stat-label">Hiring Signals</div>
-                <div class="stat-value" id="stat-hiring">-</div>
-            </div>
-            <div class="stat-card contracts">
-                <div class="stat-label">Contract Awards</div>
-                <div class="stat-value" id="stat-contracts">-</div>
-            </div>
+            <div class="logo-name">Altitude<span>AI</span></div>
+            <div class="logo-pill">AI-Powered</div>
         </div>
+        <nav class="nav">
+            <a href="#">Dashboard</a>
+            <a href="#">Companies</a>
+            <a href="#">Signals</a>
+            <a href="#">AI Insights</a>
+        </nav>
+    </div>
+</header>
 
-        <!-- Filters -->
-        <div class="filters-section">
-            <div class="filters-grid">
-                <div class="filter-group">
-                    <label>State</label>
-                    <select id="filter-state">
-                        <option value="">All States</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label>Industry</label>
-                    <select id="filter-industry">
-                        <option value="">All Industries</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label>Company Size</label>
-                    <select id="filter-size">
-                        <option value="">All Sizes</option>
-                        <option value="50-200">50-200</option>
-                        <option value="200-500">200-500</option>
-                        <option value="500-1000">500-1000</option>
-                        <option value="1000-5000">1000-5000</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label>Signal Type</label>
-                    <select id="filter-signal">
-                        <option value="">All Signals</option>
-                        <option value="hiring">Hiring</option>
-                        <option value="contract">Contract</option>
-                        <option value="expansion">Expansion</option>
-                        <option value="tech_mention">Tech Mention</option>
-                    </select>
-                </div>
-                <div class="filter-group" style="display: flex; align-items: end;">
-                    <button class="btn btn-primary" onclick="applyFilters()">
-                        Search Companies
-                    </button>
-                </div>
-            </div>
+<main class="container">
+
+    <!-- AI Search -->
+    <div class="search-hero">
+        <div class="search-hero-label">AI Natural Language Search · Live</div>
+        <div class="search-row">
+            <input class="ai-input" id="ai-input" type="text"
+                   placeholder="e.g. 'high intent manufacturing companies in Texas' or 'companies hiring network engineers'">
+            <button class="ai-btn" onclick="runAISearch()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                Search with AI
+            </button>
         </div>
+        <div class="search-hints">
+            <span class="hint-chip" onclick="fillSearch('high intent companies in Michigan')">High intent · Michigan</span>
+            <span class="hint-chip" onclick="fillSearch('companies hiring network engineers')">Hiring signals</span>
+            <span class="hint-chip" onclick="fillSearch('government contract manufacturing')">Gov contracts</span>
+            <span class="hint-chip" onclick="fillSearch('expanding facilities Texas')">Facility expansion</span>
+        </div>
+    </div>
 
-        <!-- Results -->
-        <div class="results-section">
-            <div class="results-header">
-                <h2 class="results-title">Companies</h2>
-                <span class="results-count" id="results-count">Loading...</span>
-            </div>
-            <div class="company-list" id="company-list">
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Loading companies...</p>
-                </div>
+    <!-- AI Status Banner (shown during search) -->
+    <div class="ai-status" id="ai-status">
+        <div class="spinner" style="width:20px;height:20px;border-width:2px;flex-shrink:0;margin:0;"></div>
+        <span id="ai-status-text">AI is processing your query…</span>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-label">Total Companies</div>
+            <div class="stat-value" id="stat-companies">—</div>
+        </div>
+        <div class="stat-card green">
+            <div class="stat-label">Active Signals</div>
+            <div class="stat-value" id="stat-signals">—</div>
+        </div>
+        <div class="stat-card purple">
+            <div class="stat-label">Avg AI Intent Score</div>
+            <div class="stat-value" id="stat-avg-intent">—</div>
+        </div>
+        <div class="stat-card amber">
+            <div class="stat-label">High Intent (70+)</div>
+            <div class="stat-value" id="stat-high-intent">—</div>
+        </div>
+    </div>
+
+    <!-- AI Market Insights -->
+    <div class="insights-section">
+        <div class="section-header">
+            <div class="section-title">AI Market Insights</div>
+            <div class="section-badge badge-purple">Auto-Generated</div>
+        </div>
+        <div class="insights-grid" id="insights-grid">
+            <div class="loading-state" style="grid-column:1/-1">
+                <div class="spinner"></div>
+                <p style="font-size:0.85rem">AI analysing market data…</p>
             </div>
         </div>
-    </main>
+    </div>
 
-    <script>
-        async function loadStats() {
-            try {
-                const response = await fetch('/api/stats');
-                const stats = await response.json();
-                document.getElementById('stat-companies').textContent = stats.total_companies;
-                document.getElementById('stat-signals').textContent = stats.total_signals;
-                document.getElementById('stat-hiring').textContent = stats.hiring_signals;
-                document.getElementById('stat-contracts').textContent = stats.contract_signals;
-            } catch (error) {
-                console.error('Error loading stats:', error);
-            }
-        }
+    <!-- Filters -->
+    <div class="filters-section">
+        <div class="filters-grid">
+            <div class="filter-group">
+                <label class="filter-label">State</label>
+                <select class="filter-select" id="f-state">
+                    <option value="">All States</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">Industry</label>
+                <select class="filter-select" id="f-industry">
+                    <option value="">All Industries</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">Company Size</label>
+                <select class="filter-select" id="f-size">
+                    <option value="">All Sizes</option>
+                    <option value="50-200">50–200</option>
+                    <option value="200-500">200–500</option>
+                    <option value="500-1000">500–1,000</option>
+                    <option value="1000-5000">1,000–5,000</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">Min AI Intent Score</label>
+                <select class="filter-select" id="f-intent">
+                    <option value="">Any Score</option>
+                    <option value="70">70+ (High)</option>
+                    <option value="50">50+ (Medium)</option>
+                    <option value="30">30+ (Low)</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">&nbsp;</label>
+                <button class="filter-btn" onclick="applyFilters()">Apply Filters</button>
+            </div>
+        </div>
+    </div>
 
-        async function loadFilters() {
-            try {
-                const [statesRes, industriesRes] = await Promise.all([
-                    fetch('/api/states'),
-                    fetch('/api/industries')
-                ]);
-                
-                const states = await statesRes.json();
-                const industries = await industriesRes.json();
-                
-                const stateSelect = document.getElementById('filter-state');
-                states.forEach(state => {
-                    const option = document.createElement('option');
-                    option.value = state;
-                    option.textContent = state;
-                    stateSelect.appendChild(option);
-                });
-                
-                const industrySelect = document.getElementById('filter-industry');
-                industries.forEach(industry => {
-                    const option = document.createElement('option');
-                    option.value = industry;
-                    option.textContent = industry;
-                    industrySelect.appendChild(option);
-                });
-            } catch (error) {
-                console.error('Error loading filters:', error);
-            }
-        }
+    <!-- Results -->
+    <div class="results-section">
+        <div class="results-header">
+            <div class="results-title">AI-Ranked Companies</div>
+            <div class="results-meta" id="results-meta">Loading…</div>
+        </div>
+        <div id="company-list">
+            <div class="loading-state">
+                <div class="spinner"></div>
+                <p style="font-size:0.85rem">AI ranking by buying intent…</p>
+            </div>
+        </div>
+    </div>
 
-        async function loadCompanies() {
-            try {
-                const params = new URLSearchParams();
-                const state = document.getElementById('filter-state').value;
-                const industry = document.getElementById('filter-industry').value;
-                const size = document.getElementById('filter-size').value;
-                const signalType = document.getElementById('filter-signal').value;
-                
-                if (state) params.append('state', state);
-                if (industry) params.append('industry', industry);
-                if (size) params.append('size', size);
-                if (signalType) params.append('signal_type', signalType);
-                
-                const response = await fetch(`/api/companies?${params}`);
-                const companies = await response.json();
-                
-                renderCompanies(companies);
-            } catch (error) {
-                console.error('Error loading companies:', error);
-                document.getElementById('company-list').innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">⚠️</div>
-                        <h3>Error loading companies</h3>
-                        <p>Please try again later</p>
+</main>
+
+<script>
+const ICONS = {
+    hiring: '👥',
+    contract: '📄',
+    expansion: '🏗️',
+    tech_mention: '💻'
+};
+
+function intentClass(score) {
+    if (score >= 70) return 'high';
+    if (score >= 45) return 'medium';
+    return 'low';
+}
+
+// ── Stats ──────────────────────────────────
+async function loadStats() {
+    const res = await fetch('/api/stats');
+    const d = await res.json();
+    document.getElementById('stat-companies').textContent = d.total_companies;
+    document.getElementById('stat-signals').textContent = d.total_signals;
+    document.getElementById('stat-avg-intent').textContent = d.avg_buying_intent + '%';
+    document.getElementById('stat-high-intent').textContent = d.high_intent_companies;
+}
+
+// ── AI Insights ────────────────────────────
+async function loadInsights() {
+    const res = await fetch('/api/ai-insights');
+    const insights = await res.json();
+    const grid = document.getElementById('insights-grid');
+    grid.innerHTML = insights.map(i => `
+        <div class="insight-card">
+            <div class="insight-type">${i.insight_type}</div>
+            <div class="insight-title">${i.title}</div>
+            <div class="insight-desc">${i.description}</div>
+            <div class="insight-confidence">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                AI Confidence: ${Math.round(i.confidence * 100)}%
+            </div>
+        </div>
+    `).join('');
+}
+
+// ── Filters ────────────────────────────────
+async function loadFilters() {
+    const [sr, ir] = await Promise.all([fetch('/api/states'), fetch('/api/industries')]);
+    const states = await sr.json();
+    const industries = await ir.json();
+    const ss = document.getElementById('f-state');
+    states.forEach(s => ss.add(new Option(s, s)));
+    const is = document.getElementById('f-industry');
+    industries.forEach(i => is.add(new Option(i, i)));
+}
+
+// ── Companies ──────────────────────────────
+async function loadCompanies(params = {}) {
+    document.getElementById('company-list').innerHTML = `
+        <div class="loading-state">
+            <div class="spinner"></div>
+            <p style="font-size:0.85rem">AI ranking by buying intent…</p>
+        </div>`;
+    document.getElementById('results-meta').textContent = 'Loading…';
+
+    const qs = new URLSearchParams(params);
+    const res = await fetch('/api/companies?' + qs);
+    const companies = await res.json();
+    renderCompanies(companies);
+}
+
+function applyFilters() {
+    const params = {};
+    const state = document.getElementById('f-state').value;
+    const industry = document.getElementById('f-industry').value;
+    const size = document.getElementById('f-size').value;
+    const intent = document.getElementById('f-intent').value;
+    if (state) params.state = state;
+    if (industry) params.industry = industry;
+    if (size) params.size = size;
+    if (intent) params.min_intent = intent;
+    loadCompanies(params);
+}
+
+function renderCompanies(companies) {
+    const list = document.getElementById('company-list');
+    const meta = document.getElementById('results-meta');
+    meta.textContent = `${companies.length} companies · sorted by AI intent score`;
+
+    if (!companies.length) {
+        list.innerHTML = `<div class="empty-state">🔍 No companies match these filters — try adjusting criteria.</div>`;
+        return;
+    }
+
+    list.innerHTML = companies.map(c => {
+        const cls = intentClass(c.buying_intent_score);
+        const badgesHTML = c.signals.map(s =>
+            `<span class="signal-badge ${s.signal_type}">${s.signal_type.replace('_',' ')}</span>`
+        ).join('');
+
+        const signalsHTML = c.signals.map(s => `
+            <div class="signal-item">
+                <div class="signal-icon ${s.signal_type}">${ICONS[s.signal_type] || '📊'}</div>
+                <div class="signal-body">
+                    <div class="signal-desc">${s.description}</div>
+                    <div class="signal-source">Source: ${s.source}</div>
+                    <div class="signal-ai-insight">💡 AI: ${s.ai_extracted_insight}</div>
+                </div>
+                <div class="confidence-col">
+                    <div class="conf-bar">
+                        <div class="conf-fill" style="width:${Math.round(s.confidence_score * 100)}%"></div>
                     </div>
-                `;
-            }
-        }
-
-        function renderCompanies(companies) {
-            const container = document.getElementById('company-list');
-            const countElement = document.getElementById('results-count');
-            
-            countElement.textContent = `${companies.length} companies found`;
-            
-            if (companies.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">🔍</div>
-                        <h3>No companies found</h3>
-                        <p>Try adjusting your filters</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            container.innerHTML = companies.map(company => `
-                <div class="company-card">
-                    <div class="company-header">
-                        <div>
-                            <div class="company-name">${company.name}</div>
-                            <div class="company-meta">
-                                <span>📍 ${company.city}, ${company.state}</span>
-                                <span>🏢 ${company.industry}</span>
-                                <span>👥 ${company.size} employees</span>
-                                <span>💰 ${company.revenue}</span>
-                            </div>
-                        </div>
-                        <div class="signal-badges">
-                            ${company.signals.map(s => `
-                                <span class="signal-badge ${s.signal_type}">${s.signal_type}</span>
-                            `).join('')}
-                        </div>
-                    </div>
-                    
-                    ${company.signals.length > 0 ? `
-                        <div class="signals-list">
-                            ${company.signals.map(signal => `
-                                <div class="signal-item">
-                                    <div class="signal-type-icon ${signal.signal_type}">
-                                        ${getSignalIcon(signal.signal_type)}
-                                    </div>
-                                    <div class="signal-content">
-                                        <div>${signal.description}</div>
-                                        <div class="signal-source">Source: ${signal.source}</div>
-                                    </div>
-                                    <div class="confidence-score">
-                                        <div class="confidence-bar">
-                                            <div class="confidence-fill" style="width: ${(signal.confidence_score * 100)}%"></div>
-                                        </div>
-                                        <span>${Math.round(signal.confidence_score * 100)}%</span>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    ` : ''}
+                    <span>${Math.round(s.confidence_score * 100)}%</span>
                 </div>
-            `).join('');
-        }
+            </div>
+        `).join('');
 
-        function getSignalIcon(type) {
-            const icons = {
-                'hiring': '👥',
-                'contract': '📄',
-                'expansion': '🏗️',
-                'tech_mention': '💻'
-            };
-            return icons[type] || '📊';
-        }
+        return `
+        <div class="company-card">
+            <div class="company-top">
+                <div class="company-body">
+                    <div class="company-name">${c.name}</div>
+                    <div class="company-meta">
+                        <span>📍 ${c.city}, ${c.state}</span>
+                        <span>🏭 ${c.industry}</span>
+                        <span>👥 ${c.size} employees</span>
+                        <span>💰 ${c.revenue}</span>
+                    </div>
 
-        function applyFilters() {
-            loadCompanies();
-        }
+                    <div class="ai-summary">
+                        <div class="ai-summary-label">🤖 AI Analysis</div>
+                        <div class="ai-summary-text">${c.ai_summary}</div>
+                    </div>
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadStats();
-            loadFilters();
-            loadCompanies();
+                    <div class="ai-recommendation">${c.recommended_action}</div>
+
+                    <div class="badge-row">${badgesHTML}</div>
+
+                    ${c.signals.length ? `<div class="signals-list">${signalsHTML}</div>` : ''}
+                </div>
+
+                <div class="intent-box">
+                    <div class="intent-number ${cls}">${c.buying_intent_score}</div>
+                    <div class="intent-label">AI Intent</div>
+                    <div class="intent-bar">
+                        <div class="intent-fill ${cls}" style="width:${c.buying_intent_score}%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+// ── AI Search ──────────────────────────────
+async function runAISearch() {
+    const query = document.getElementById('ai-input').value.trim();
+    if (!query) return;
+
+    const statusEl = document.getElementById('ai-status');
+    const statusText = document.getElementById('ai-status-text');
+    statusEl.classList.add('visible');
+    statusText.textContent = `AI processing: "${query}"…`;
+
+    try {
+        const res = await fetch('/api/search', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query })
         });
-    </script>
+        const data = await res.json();
+
+        statusText.textContent = `✓ ${data.ai_interpretation}`;
+        setTimeout(() => statusEl.classList.remove('visible'), 4000);
+
+        renderCompanies(data.results.map(r => r.company));
+        document.getElementById('results-meta').textContent =
+            `${data.total} results for AI search · "${query}"`;
+    } catch (err) {
+        statusText.textContent = 'Search failed — please try again.';
+        setTimeout(() => statusEl.classList.remove('visible'), 3000);
+    }
+}
+
+function fillSearch(text) {
+    document.getElementById('ai-input').value = text;
+    runAISearch();
+}
+
+document.getElementById('ai-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') runAISearch();
+});
+
+// ── Init ───────────────────────────────────
+(async () => {
+    await Promise.all([loadStats(), loadInsights(), loadFilters()]);
+    loadCompanies();
+})();
+</script>
 </body>
 </html>
