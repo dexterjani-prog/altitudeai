@@ -63,6 +63,7 @@ def init_sample_data():
                    industry="Process Control", size="500-1000", revenue="$100M-$500M",
                    country="USA", state="Pennsylvania", city="Pittsburgh"),
         ]
+        
         for company in sample_companies:
             db.session.add(company)
         db.session.commit()
@@ -84,9 +85,15 @@ def init_sample_data():
                   description="Multiple openings for OT Security Specialists",
                   confidence_score=0.88),
         ]
+        
         for signal in signals:
             db.session.add(signal)
         db.session.commit()
+
+# THIS IS THE FIX - Create tables on startup
+with app.app_context():
+    db.create_all()
+    init_sample_data()
 
 @app.route('/')
 def index():
@@ -129,7 +136,4 @@ def get_stats():
     })
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-        init_sample_data()
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
