@@ -4,32 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AltitudeAI - Industrial Intelligence Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
+            /* AltitudeXR Brand Colors */
+            --primary: #EE1B24;
+            --primary-dark: #B11016;
+            --secondary: #B11016;
+            
+            /* Contrast tones */
+            --slate: #1D1D1D;
+            --white: #FFFFFF;
+            
+            /* Grey tones */
+            --gray-1: #262626;
+            --gray-2: #404040;
+            --gray-3: #7F7F7F;
+            --gray-4: #C4C4C4;
+            
+            /* Functional colors */
             --success: #10b981;
             --warning: #f59e0b;
-            --danger: #ef4444;
-            --bg: #f8fafc;
+            --info: #3b82f6;
+            
+            /* Backgrounds */
+            --bg: #f8f9fa;
             --card: #ffffff;
-            --text: #1e293b;
-            --text-light: #64748b;
-            --border: #e2e8f0;
+            --text: #1D1D1D;
+            --text-light: #7F7F7F;
+            --border: #C4C4C4;
         }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Poppins', sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
         }
+        
+        /* Header */
         .header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 1.5rem 2rem;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
+        
         .header-content {
             max-width: 1400px;
             margin: 0 auto;
@@ -37,96 +63,200 @@
             justify-content: space-between;
             align-items: center;
         }
+        
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
+        
         .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: rgba(255,255,255,0.2);
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
         }
+        
+        .logo-icon::before {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 16px solid var(--white);
+            transform: rotate(-15deg);
+        }
+        
+        .logo-icon::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 12px solid var(--primary);
+            transform: rotate(-15deg) translate(2px, 2px);
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--slate);
+            letter-spacing: -0.5px;
+        }
+        
+        .logo-text span {
+            color: var(--primary);
+        }
+        
         .nav-links {
             display: flex;
             gap: 2rem;
         }
+        
         .nav-links a {
-            color: rgba(255,255,255,0.9);
+            color: var(--gray-2);
             text-decoration: none;
             font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
         }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* Main Container */
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 2rem;
         }
+        
+        /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
+        
         .stat-card {
             background: var(--card);
             padding: 1.5rem;
             border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
             border-left: 4px solid var(--primary);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .stat-card.hiring { border-left-color: var(--success); }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card.signals { border-left-color: var(--success); }
+        .stat-card.hiring { border-left-color: var(--info); }
         .stat-card.contracts { border-left-color: var(--warning); }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .stat-value {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--slate);
+        }
+        
+        /* Filters Section */
         .filters-section {
             background: var(--card);
             padding: 1.5rem;
             border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
             margin-bottom: 2rem;
         }
+        
         .filters-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
         }
+        
         .filter-group {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
         }
+        
         .filter-group label {
             font-size: 0.875rem;
             font-weight: 600;
+            color: var(--gray-1);
         }
-        .filter-group select {
+        
+        .filter-group select,
+        .filter-group input {
             padding: 0.75rem;
             border: 1px solid var(--border);
             border-radius: 8px;
             font-size: 0.875rem;
+            background: var(--white);
+            font-family: 'Poppins', sans-serif;
+            color: var(--gray-1);
         }
+        
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(238, 27, 36, 0.1);
+        }
+        
         .btn {
-            padding: 0.75rem 1.5rem;
+            padding: 0.875rem 1.5rem;
             border: none;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+        }
+        
+        .btn-primary {
             background: var(--primary);
-            color: white;
+            color: var(--white);
         }
-        .btn:hover {
+        
+        .btn-primary:hover {
             background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(238, 27, 36, 0.3);
         }
+        
+        /* Results Section */
         .results-section {
             background: var(--card);
             border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
             overflow: hidden;
         }
+        
         .results-header {
             padding: 1.5rem;
             border-bottom: 1px solid var(--border);
@@ -134,28 +264,52 @@
             justify-content: space-between;
             align-items: center;
         }
+        
+        .results-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--slate);
+        }
+        
+        .results-count {
+            color: var(--text-light);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
         .company-list {
             max-height: 600px;
             overflow-y: auto;
         }
+        
         .company-card {
             padding: 1.5rem;
             border-bottom: 1px solid var(--border);
+            transition: background 0.2s;
         }
+        
         .company-card:hover {
-            background: #f8fafc;
+            background: #fafafa;
         }
+        
+        .company-card:last-child {
+            border-bottom: none;
+        }
+        
         .company-header {
             display: flex;
             justify-content: space-between;
             align-items: start;
             margin-bottom: 1rem;
         }
+        
         .company-name {
             font-size: 1.125rem;
             font-weight: 700;
+            color: var(--slate);
             margin-bottom: 0.25rem;
         }
+        
         .company-meta {
             display: flex;
             gap: 1rem;
@@ -163,69 +317,178 @@
             color: var(--text-light);
             flex-wrap: wrap;
         }
+        
+        .company-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
         .signal-badges {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
         }
+        
         .signal-badge {
-            padding: 0.25rem 0.75rem;
+            padding: 0.35rem 0.875rem;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
-        .signal-badge.hiring { background: #d1fae5; color: #065f46; }
-        .signal-badge.contract { background: #fef3c7; color: #92400e; }
-        .signal-badge.expansion { background: #fee2e2; color: #991b1b; }
-        .signal-badge.tech_mention { background: #dbeafe; color: #1e40af; }
+        
+        .signal-badge.hiring {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .signal-badge.contract {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .signal-badge.expansion {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .signal-badge.tech_mention {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
         .signals-list {
             margin-top: 1rem;
             padding-top: 1rem;
             border-top: 1px solid var(--border);
         }
+        
         .signal-item {
             display: flex;
             gap: 1rem;
-            padding: 0.75rem;
-            background: #f8fafc;
+            padding: 0.875rem;
+            background: #f8f9fa;
             border-radius: 8px;
             margin-bottom: 0.5rem;
             font-size: 0.875rem;
         }
+        
+        .signal-type-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+        
+        .signal-type-icon.hiring { background: #dbeafe; color: #1e40af; }
+        .signal-type-icon.contract { background: #fef3c7; color: #92400e; }
+        .signal-type-icon.expansion { background: #fee2e2; color: #991b1b; }
+        .signal-type-icon.tech_mention { background: #d1fae5; color: #065f46; }
+        
+        .signal-content {
+            flex: 1;
+        }
+        
+        .signal-source {
+            color: var(--text-light);
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
+        
+        .confidence-score {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
         .confidence-bar {
             width: 60px;
             height: 4px;
-            background: var(--border);
+            background: var(--gray-4);
             border-radius: 2px;
             overflow: hidden;
         }
+        
         .confidence-fill {
             height: 100%;
             background: var(--success);
+            border-radius: 2px;
         }
+        
+        /* Loading State */
         .loading {
             text-align: center;
             padding: 3rem;
+            color: var(--text-light);
         }
+        
         .spinner {
             width: 40px;
             height: 40px;
-            border: 3px solid var(--border);
+            border: 3px solid var(--gray-4);
             border-top-color: var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 0 auto 1rem;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-light);
+        }
+        
+        .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .company-header {
+                flex-direction: column;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
     <header class="header">
         <div class="header-content">
             <div class="logo">
-                <div class="logo-icon">⚡</div>
-                <span>AltitudeAI</span>
+                <div class="logo-icon"></div>
+                <div class="logo-text">Altitude<span>AI</span></div>
             </div>
             <nav class="nav-links">
                 <a href="#">Dashboard</a>
@@ -236,34 +499,40 @@
     </header>
 
     <main class="container">
+        <!-- Stats Grid -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-label">Total Companies</div>
                 <div class="stat-value" id="stat-companies">-</div>
             </div>
-            <div class="stat-card hiring">
+            <div class="stat-card signals">
                 <div class="stat-label">Active Signals</div>
                 <div class="stat-value" id="stat-signals">-</div>
             </div>
-            <div class="stat-card contracts">
+            <div class="stat-card hiring">
                 <div class="stat-label">Hiring Signals</div>
                 <div class="stat-value" id="stat-hiring">-</div>
             </div>
-            <div class="stat-card expansion">
+            <div class="stat-card contracts">
                 <div class="stat-label">Contract Awards</div>
                 <div class="stat-value" id="stat-contracts">-</div>
             </div>
         </div>
 
+        <!-- Filters -->
         <div class="filters-section">
             <div class="filters-grid">
                 <div class="filter-group">
                     <label>State</label>
-                    <select id="filter-state"><option value="">All States</option></select>
+                    <select id="filter-state">
+                        <option value="">All States</option>
+                    </select>
                 </div>
                 <div class="filter-group">
                     <label>Industry</label>
-                    <select id="filter-industry"><option value="">All Industries</option></select>
+                    <select id="filter-industry">
+                        <option value="">All Industries</option>
+                    </select>
                 </div>
                 <div class="filter-group">
                     <label>Company Size</label>
@@ -286,104 +555,175 @@
                     </select>
                 </div>
                 <div class="filter-group" style="display: flex; align-items: end;">
-                    <button class="btn" onclick="applyFilters()">🔍 Search</button>
+                    <button class="btn btn-primary" onclick="applyFilters()">
+                        Search Companies
+                    </button>
                 </div>
             </div>
         </div>
 
+        <!-- Results -->
         <div class="results-section">
             <div class="results-header">
-                <h2>Companies</h2>
-                <span id="results-count">Loading...</span>
+                <h2 class="results-title">Companies</h2>
+                <span class="results-count" id="results-count">Loading...</span>
             </div>
             <div class="company-list" id="company-list">
-                <div class="loading"><div class="spinner"></div><p>Loading...</p></div>
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading companies...</p>
+                </div>
             </div>
         </div>
     </main>
 
     <script>
         async function loadStats() {
-            const res = await fetch('/api/stats');
-            const stats = await res.json();
-            document.getElementById('stat-companies').textContent = stats.total_companies;
-            document.getElementById('stat-signals').textContent = stats.total_signals;
-            document.getElementById('stat-hiring').textContent = stats.hiring_signals;
-            document.getElementById('stat-contracts').textContent = stats.contract_signals;
+            try {
+                const response = await fetch('/api/stats');
+                const stats = await response.json();
+                document.getElementById('stat-companies').textContent = stats.total_companies;
+                document.getElementById('stat-signals').textContent = stats.total_signals;
+                document.getElementById('stat-hiring').textContent = stats.hiring_signals;
+                document.getElementById('stat-contracts').textContent = stats.contract_signals;
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
         }
 
         async function loadFilters() {
-            const [statesRes, industriesRes] = await Promise.all([
-                fetch('/api/states'), fetch('/api/industries')
-            ]);
-            const states = await statesRes.json();
-            const industries = await industriesRes.json();
-            
-            const stateSelect = document.getElementById('filter-state');
-            states.forEach(s => stateSelect.add(new Option(s, s)));
-            
-            const industrySelect = document.getElementById('filter-industry');
-            industries.forEach(i => industrySelect.add(new Option(i, i)));
+            try {
+                const [statesRes, industriesRes] = await Promise.all([
+                    fetch('/api/states'),
+                    fetch('/api/industries')
+                ]);
+                
+                const states = await statesRes.json();
+                const industries = await industriesRes.json();
+                
+                const stateSelect = document.getElementById('filter-state');
+                states.forEach(state => {
+                    const option = document.createElement('option');
+                    option.value = state;
+                    option.textContent = state;
+                    stateSelect.appendChild(option);
+                });
+                
+                const industrySelect = document.getElementById('filter-industry');
+                industries.forEach(industry => {
+                    const option = document.createElement('option');
+                    option.value = industry;
+                    option.textContent = industry;
+                    industrySelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading filters:', error);
+            }
         }
 
         async function loadCompanies() {
-            const params = new URLSearchParams();
-            const state = document.getElementById('filter-state').value;
-            const industry = document.getElementById('filter-industry').value;
-            const size = document.getElementById('filter-size').value;
-            const signalType = document.getElementById('filter-signal').value;
-            
-            if (state) params.append('state', state);
-            if (industry) params.append('industry', industry);
-            if (size) params.append('size', size);
-            if (signalType) params.append('signal_type', signalType);
-            
-            const res = await fetch(`/api/companies?${params}`);
-            const companies = await res.json();
-            
-            document.getElementById('results-count').textContent = `${companies.length} companies found`;
-            
+            try {
+                const params = new URLSearchParams();
+                const state = document.getElementById('filter-state').value;
+                const industry = document.getElementById('filter-industry').value;
+                const size = document.getElementById('filter-size').value;
+                const signalType = document.getElementById('filter-signal').value;
+                
+                if (state) params.append('state', state);
+                if (industry) params.append('industry', industry);
+                if (size) params.append('size', size);
+                if (signalType) params.append('signal_type', signalType);
+                
+                const response = await fetch(`/api/companies?${params}`);
+                const companies = await response.json();
+                
+                renderCompanies(companies);
+            } catch (error) {
+                console.error('Error loading companies:', error);
+                document.getElementById('company-list').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">⚠️</div>
+                        <h3>Error loading companies</h3>
+                        <p>Please try again later</p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderCompanies(companies) {
             const container = document.getElementById('company-list');
+            const countElement = document.getElementById('results-count');
+            
+            countElement.textContent = `${companies.length} companies found`;
+            
             if (companies.length === 0) {
-                container.innerHTML = '<div class="loading"><p>No companies found</p></div>';
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🔍</div>
+                        <h3>No companies found</h3>
+                        <p>Try adjusting your filters</p>
+                    </div>
+                `;
                 return;
             }
             
-            container.innerHTML = companies.map(c => `
+            container.innerHTML = companies.map(company => `
                 <div class="company-card">
                     <div class="company-header">
                         <div>
-                            <div class="company-name">${c.name}</div>
+                            <div class="company-name">${company.name}</div>
                             <div class="company-meta">
-                                <span>📍 ${c.city}, ${c.state}</span>
-                                <span>🏢 ${c.industry}</span>
-                                <span>👥 ${c.size}</span>
-                                <span>💰 ${c.revenue}</span>
+                                <span>📍 ${company.city}, ${company.state}</span>
+                                <span>🏢 ${company.industry}</span>
+                                <span>👥 ${company.size} employees</span>
+                                <span>💰 ${company.revenue}</span>
                             </div>
                         </div>
                         <div class="signal-badges">
-                            ${c.signals.map(s => `<span class="signal-badge ${s.signal_type}">${s.signal_type}</span>`).join('')}
+                            ${company.signals.map(s => `
+                                <span class="signal-badge ${s.signal_type}">${s.signal_type}</span>
+                            `).join('')}
                         </div>
                     </div>
-                    ${c.signals.length ? `<div class="signals-list">
-                        ${c.signals.map(s => `
-                            <div class="signal-item">
-                                <div style="flex:1">
-                                    <div>${s.description}</div>
-                                    <div style="color:var(--text-light);font-size:0.75rem">Source: ${s.source}</div>
+                    
+                    ${company.signals.length > 0 ? `
+                        <div class="signals-list">
+                            ${company.signals.map(signal => `
+                                <div class="signal-item">
+                                    <div class="signal-type-icon ${signal.signal_type}">
+                                        ${getSignalIcon(signal.signal_type)}
+                                    </div>
+                                    <div class="signal-content">
+                                        <div>${signal.description}</div>
+                                        <div class="signal-source">Source: ${signal.source}</div>
+                                    </div>
+                                    <div class="confidence-score">
+                                        <div class="confidence-bar">
+                                            <div class="confidence-fill" style="width: ${(signal.confidence_score * 100)}%"></div>
+                                        </div>
+                                        <span>${Math.round(signal.confidence_score * 100)}%</span>
+                                    </div>
                                 </div>
-                                <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.75rem">
-                                    <div class="confidence-bar"><div class="confidence-fill" style="width:${s.confidence_score*100}%"></div></div>
-                                    <span>${Math.round(s.confidence_score*100)}%</span>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>` : ''}
+                            `).join('')}
+                        </div>
+                    ` : ''}
                 </div>
             `).join('');
         }
 
-        function applyFilters() { loadCompanies(); }
+        function getSignalIcon(type) {
+            const icons = {
+                'hiring': '👥',
+                'contract': '📄',
+                'expansion': '🏗️',
+                'tech_mention': '💻'
+            };
+            return icons[type] || '📊';
+        }
+
+        function applyFilters() {
+            loadCompanies();
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             loadStats();
