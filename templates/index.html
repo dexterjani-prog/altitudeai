@@ -262,6 +262,7 @@
         .stat-card.ai-score { border-left-color: var(--purple); }
         .stat-card.signals { border-left-color: var(--success); }
         .stat-card.hiring { border-left-color: var(--info); }
+        .stat-card.contracts { border-left-color: var(--warning); }
         
         .stat-label {
             font-size: 0.75rem;
@@ -718,63 +719,40 @@
     </main>
 
     <script>
-        // Load stats with error handling
         async function loadStats() {
             try {
                 const response = await fetch('/api/stats');
                 const stats = await response.json();
-                
-                // Safe assignment with fallbacks to prevent "undefined"
-                document.getElementById('stat-companies').textContent = stats.total_companies || 0;
-                document.getElementById('stat-signals').textContent = stats.total_signals || 0;
-                document.getElementById('stat-high-intent').textContent = stats.high_intent_companies || 0;
-                
-                // Fix: Handle avg_buying_intent properly - add % symbol
-                const avgIntent = stats.avg_buying_intent;
-                document.getElementById('stat-avg-intent').textContent = 
-                    (avgIntent !== undefined && avgIntent !== null) ? avgIntent + '%' : '--';
-                    
+                document.getElementById('stat-companies').textContent = stats.total_companies;
+                document.getElementById('stat-signals').textContent = stats.total_signals;
+                document.getElementById('stat-high-intent').textContent = stats.high_intent_companies;
+                document.getElementById('stat-avg-intent').textContent = stats.avg_buying_intent + '%';
             } catch (error) {
                 console.error('Error loading stats:', error);
-                // Set fallback values on error
-                document.getElementById('stat-companies').textContent = '--';
-                document.getElementById('stat-signals').textContent = '--';
-                document.getElementById('stat-high-intent').textContent = '--';
-                document.getElementById('stat-avg-intent').textContent = '--';
             }
         }
 
-        // Load AI insights
         async function loadAIInsights() {
             try {
                 const response = await fetch('/api/ai-insights');
                 const insights = await response.json();
                 
                 const container = document.getElementById('insights-list');
-                
-                if (!insights || insights.length === 0) {
-                    container.innerHTML = '<p style="padding: 1rem; color: var(--gray-3);">No insights available</p>';
-                    return;
-                }
-                
                 container.innerHTML = insights.map(insight => `
                     <div class="ai-insight-item">
-                        <div class="ai-insight-type">${insight.insight_type || 'Insight'}</div>
-                        <div class="ai-insight-title">${insight.title || ''}</div>
-                        <div class="ai-insight-desc">${insight.description || ''}</div>
+                        <div class="ai-insight-type">${insight.insight_type}</div>
+                        <div class="ai-insight-title">${insight.title}</div>
+                        <div class="ai-insight-desc">${insight.description}</div>
                         <div class="ai-confidence">
-                            ✓ AI Confidence: ${Math.round((insight.confidence || 0) * 100)}%
+                            ✓ AI Confidence: ${Math.round(insight.confidence * 100)}%
                         </div>
                     </div>
                 `).join('');
             } catch (error) {
                 console.error('Error loading AI insights:', error);
-                document.getElementById('insights-list').innerHTML = 
-                    '<p style="padding: 1rem; color: var(--gray-3);">AI insights temporarily unavailable</p>';
             }
         }
 
-        // Load filters
         async function loadFilters() {
             try {
                 const [statesRes, industriesRes] = await Promise.all([
@@ -805,7 +783,6 @@
             }
         }
 
-        // Load companies
         async function loadCompanies() {
             try {
                 const params = new URLSearchParams();
@@ -825,23 +802,12 @@
                 renderCompanies(companies);
             } catch (error) {
                 console.error('Error loading companies:', error);
-                document.getElementById('company-list').innerHTML = `
-                    <div class="empty-state">
-                        <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
-                        <h3>Error loading companies</h3>
-                        <p>Please refresh the page</p>
-                    </div>
-                `;
             }
         }
 
-        // AI Search
         async function aiSearch() {
             const query = document.getElementById('ai-search-input').value;
-            if (!query) {
-                alert('Please enter a search query');
-                return;
-            }
+            if (!query) return;
             
             try {
                 const response = await fetch('/api/search', {
@@ -852,26 +818,16 @@
                 
                 const data = await response.json();
                 
-                alert(`AI Interpretation: ${data.ai_interpretation || 'Search completed'}\n\nFound ${data.total_matches || 0} matching companies`);
+                alert(`AI Interpretation: ${data.ai_interpretation}\n\nFound ${data.results.length} matching companies`);
                 
-                if (data.results && data.results.length > 0) {
+                if (data.results.length > 0) {
                     renderCompanies(data.results.map(r => r.company));
-                } else {
-                    document.getElementById('company-list').innerHTML = `
-                        <div class="empty-state">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
-                            <h3>No matches found</h3>
-                            <p>Try a different search query</p>
-                        </div>
-                    `;
                 }
             } catch (error) {
                 console.error('AI search error:', error);
-                alert('AI search temporarily unavailable. Please try regular filters.');
             }
         }
 
-        // Render companies
         function renderCompanies(companies) {
             const container = document.getElementById('company-list');
             const countElement = document.getElementById('results-count');
@@ -893,12 +849,12 @@
                 <div class="company-card">
                     <div class="company-header">
                         <div class="company-main">
-                            <div class="company-name">${company.name || ''}</div>
+                            <div class="company-name">${company.name}</div>
                             <div class="company-meta">
-                                <span>📍 ${company.city || ''}, ${company.state || ''}</span>
-                                <span>🏢 ${company.industry || ''}</span>
-                                <span>👥 ${company.size || ''}</span>
-                                <span>💰 ${company.revenue || ''}</span>
+                                <span>📍 ${company.city}, ${company.state}</span>
+                                <span>🏢 ${company.industry}</span>
+                                <span>👥 ${company.size}</span>
+                                <span>💰 ${company.revenue}</span>
                             </div>
                             
                             ${company.ai_summary ? `
@@ -915,30 +871,30 @@
                             ` : ''}
                             
                             <div class="signal-badges">
-                                ${(company.signals || []).map(s => `
-                                    <span class="signal-badge ${s.signal_type || ''}">${s.signal_type || ''}</span>
+                                ${company.signals.map(s => `
+                                    <span class="signal-badge ${s.signal_type}">${s.signal_type}</span>
                                 `).join('')}
                             </div>
                             
-                            ${(company.signals || []).length > 0 ? `
+                            ${company.signals.length > 0 ? `
                                 <div class="signals-list">
                                     ${company.signals.map(signal => `
                                         <div class="signal-item">
-                                            <div class="signal-type-icon ${signal.signal_type || ''}">
+                                            <div class="signal-type-icon ${signal.signal_type}">
                                                 ${getSignalIcon(signal.signal_type)}
                                             </div>
                                             <div class="signal-content">
-                                                <div>${signal.description || ''}</div>
-                                                <div class="signal-source">Source: ${signal.source || ''}</div>
+                                                <div>${signal.description}</div>
+                                                <div class="signal-source">Source: ${signal.source}</div>
                                                 ${signal.ai_extracted_insight ? `
                                                     <div class="ai-extracted">💡 AI: ${signal.ai_extracted_insight}</div>
                                                 ` : ''}
                                             </div>
                                             <div class="confidence-score">
                                                 <div class="confidence-bar">
-                                                    <div class="confidence-fill" style="width: ${((signal.confidence_score || 0) * 100)}%"></div>
+                                                    <div class="confidence-fill" style="width: ${(signal.confidence_score * 100)}%"></div>
                                                 </div>
-                                                <span>${Math.round((signal.confidence_score || 0) * 100)}%</span>
+                                                <span>${Math.round(signal.confidence_score * 100)}%</span>
                                             </div>
                                         </div>
                                     `).join('')}
@@ -947,7 +903,7 @@
                         </div>
                         
                         <div class="intent-score">
-                            <div class="intent-value">${company.buying_intent_score !== undefined ? company.buying_intent_score : '--'}</div>
+                            <div class="intent-value">${company.buying_intent_score || '--'}</div>
                             <div class="intent-label">AI Intent Score</div>
                             <div class="intent-bar">
                                 <div class="intent-fill" style="width: ${company.buying_intent_score || 0}%"></div>
