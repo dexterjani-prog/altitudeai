@@ -3,37 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AltitudeAI - Industrial Intelligence Platform</title>
+    <title>AltitudeAI - AI-Powered Industrial Intelligence</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
-            /* AltitudeXR Brand Colors */
             --primary: #EE1B24;
             --primary-dark: #B11016;
             --secondary: #B11016;
-            
-            /* Contrast tones */
             --slate: #1D1D1D;
             --white: #FFFFFF;
-            
-            /* Grey tones */
             --gray-1: #262626;
             --gray-2: #404040;
             --gray-3: #7F7F7F;
             --gray-4: #C4C4C4;
-            
-            /* Functional colors */
             --success: #10b981;
             --warning: #f59e0b;
             --info: #3b82f6;
-            
-            /* Backgrounds */
+            --purple: #8b5cf6;
             --bg: #f8f9fa;
             --card: #ffffff;
             --text: #1D1D1D;
@@ -92,17 +80,6 @@
             transform: rotate(-15deg);
         }
         
-        .logo-icon::after {
-            content: "";
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-bottom: 12px solid var(--primary);
-            transform: rotate(-15deg) translate(2px, 2px);
-        }
-        
         .logo-text {
             font-size: 1.5rem;
             font-weight: 700;
@@ -112,6 +89,16 @@
         
         .logo-text span {
             color: var(--primary);
+        }
+        
+        .ai-badge {
+            background: linear-gradient(135deg, var(--purple), var(--info));
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
         }
         
         .nav-links {
@@ -131,41 +118,154 @@
             color: var(--primary);
         }
         
-        /* Main Container */
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 2rem;
         }
         
+        /* AI Search Bar */
+        .ai-search-section {
+            background: linear-gradient(135deg, var(--slate) 0%, var(--gray-1) 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            color: white;
+        }
+        
+        .ai-search-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .ai-search-box {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .ai-search-input {
+            flex: 1;
+            padding: 1rem 1.25rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .ai-search-input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .ai-search-btn {
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .ai-search-btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* AI Insights Panel */
+        .ai-insights-section {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--purple);
+        }
+        
+        .ai-insights-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .ai-insights-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--slate);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .ai-insight-item {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            border-left: 3px solid var(--purple);
+        }
+        
+        .ai-insight-type {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--purple);
+            margin-bottom: 0.25rem;
+        }
+        
+        .ai-insight-title {
+            font-weight: 600;
+            color: var(--slate);
+            margin-bottom: 0.25rem;
+        }
+        
+        .ai-insight-desc {
+            font-size: 0.875rem;
+            color: var(--gray-3);
+        }
+        
+        .ai-confidence {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+            color: var(--success);
+            margin-top: 0.5rem;
+        }
+        
         /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
             margin-bottom: 2rem;
         }
         
         .stat-card {
             background: var(--card);
-            padding: 1.5rem;
+            padding: 1.25rem;
             border-radius: 12px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.08);
             border-left: 4px solid var(--primary);
-            transition: transform 0.2s, box-shadow 0.2s;
         }
         
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
+        .stat-card.ai-score { border-left-color: var(--purple); }
         .stat-card.signals { border-left-color: var(--success); }
         .stat-card.hiring { border-left-color: var(--info); }
         .stat-card.contracts { border-left-color: var(--warning); }
         
         .stat-label {
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             color: var(--text-light);
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -174,12 +274,12 @@
         }
         
         .stat-value {
-            font-size: 2.25rem;
+            font-size: 1.75rem;
             font-weight: 700;
             color: var(--slate);
         }
         
-        /* Filters Section */
+        /* Filters */
         .filters-section {
             background: var(--card);
             padding: 1.5rem;
@@ -190,7 +290,7 @@
         
         .filters-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 1rem;
         }
         
@@ -206,50 +306,40 @@
             color: var(--gray-1);
         }
         
-        .filter-group select,
-        .filter-group input {
+        .filter-group select {
             padding: 0.75rem;
             border: 1px solid var(--border);
             border-radius: 8px;
             font-size: 0.875rem;
             background: var(--white);
             font-family: 'Poppins', sans-serif;
-            color: var(--gray-1);
         }
         
-        .filter-group select:focus,
-        .filter-group input:focus {
+        .filter-group select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(238, 27, 36, 0.1);
         }
         
         .btn {
-            padding: 0.875rem 1.5rem;
+            padding: 0.75rem 1.5rem;
             border: none;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
             font-family: 'Poppins', sans-serif;
-            font-size: 0.95rem;
         }
         
         .btn-primary {
             background: var(--primary);
-            color: var(--white);
+            color: white;
         }
         
         .btn-primary:hover {
             background: var(--primary-dark);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(238, 27, 36, 0.3);
         }
         
-        /* Results Section */
+        /* Company Cards with AI */
         .results-section {
             background: var(--card);
             border-radius: 12px;
@@ -268,32 +358,15 @@
         .results-title {
             font-size: 1.25rem;
             font-weight: 700;
-            color: var(--slate);
-        }
-        
-        .results-count {
-            color: var(--text-light);
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-        
-        .company-list {
-            max-height: 600px;
-            overflow-y: auto;
         }
         
         .company-card {
             padding: 1.5rem;
             border-bottom: 1px solid var(--border);
-            transition: background 0.2s;
         }
         
         .company-card:hover {
             background: #fafafa;
-        }
-        
-        .company-card:last-child {
-            border-bottom: none;
         }
         
         .company-header {
@@ -301,6 +374,10 @@
             justify-content: space-between;
             align-items: start;
             margin-bottom: 1rem;
+        }
+        
+        .company-main {
+            flex: 1;
         }
         
         .company-name {
@@ -316,48 +393,102 @@
             font-size: 0.875rem;
             color: var(--text-light);
             flex-wrap: wrap;
+            margin-bottom: 0.75rem;
         }
         
-        .company-meta span {
+        /* AI Summary Box */
+        .ai-summary {
+            background: linear-gradient(135deg, #f3f0ff 0%, #e0e7ff 100%);
+            padding: 0.875rem;
+            border-radius: 8px;
+            margin-top: 0.75rem;
+            border-left: 3px solid var(--purple);
+        }
+        
+        .ai-summary-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--purple);
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
             display: flex;
             align-items: center;
             gap: 0.25rem;
+        }
+        
+        .ai-summary-text {
+            font-size: 0.875rem;
+            color: var(--gray-1);
+            line-height: 1.5;
+        }
+        
+        /* Buying Intent Score */
+        .intent-score {
+            text-align: center;
+            padding: 1rem;
+            background: var(--card);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            min-width: 100px;
+        }
+        
+        .intent-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .intent-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+        
+        .intent-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--gray-4);
+            border-radius: 3px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+        
+        .intent-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--warning), var(--primary));
+            border-radius: 3px;
+        }
+        
+        /* AI Recommendation */
+        .ai-recommendation {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            background: #f0fdf4;
+            border-radius: 6px;
+            border-left: 3px solid var(--success);
+            font-size: 0.875rem;
+            color: var(--gray-1);
         }
         
         .signal-badges {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
+            margin-top: 0.5rem;
         }
         
         .signal-badge {
-            padding: 0.35rem 0.875rem;
+            padding: 0.35rem 0.75rem;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
         }
         
-        .signal-badge.hiring {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-        
-        .signal-badge.contract {
-            background: #fef3c7;
-            color: #92400e;
-        }
-        
-        .signal-badge.expansion {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-        
-        .signal-badge.tech_mention {
-            background: #d1fae5;
-            color: #065f46;
-        }
+        .signal-badge.hiring { background: #dbeafe; color: #1e40af; }
+        .signal-badge.contract { background: #fef3c7; color: #92400e; }
+        .signal-badge.expansion { background: #fee2e2; color: #991b1b; }
+        .signal-badge.tech_mention { background: #d1fae5; color: #065f46; }
         
         .signals-list {
             margin-top: 1rem;
@@ -368,7 +499,7 @@
         .signal-item {
             display: flex;
             gap: 1rem;
-            padding: 0.875rem;
+            padding: 0.75rem;
             background: #f8f9fa;
             border-radius: 8px;
             margin-bottom: 0.5rem;
@@ -398,7 +529,13 @@
         .signal-source {
             color: var(--text-light);
             font-size: 0.75rem;
+        }
+        
+        .ai-extracted {
+            font-size: 0.8rem;
+            color: var(--purple);
             margin-top: 0.25rem;
+            font-style: italic;
         }
         
         .confidence-score {
@@ -407,11 +544,10 @@
             gap: 0.5rem;
             font-size: 0.75rem;
             color: var(--text-light);
-            font-weight: 500;
         }
         
         .confidence-bar {
-            width: 60px;
+            width: 50px;
             height: 4px;
             background: var(--gray-4);
             border-radius: 2px;
@@ -424,7 +560,6 @@
             border-radius: 2px;
         }
         
-        /* Loading State */
         .loading {
             text-align: center;
             padding: 3rem;
@@ -445,41 +580,17 @@
             to { transform: rotate(360deg); }
         }
         
-        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 3rem;
             color: var(--text-light);
         }
         
-        .empty-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-        
-        /* Responsive */
         @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .nav-links {
-                gap: 1rem;
-            }
-            
-            .container {
-                padding: 1rem;
-            }
-            
-            .company-header {
-                flex-direction: column;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
+            .header-content { flex-direction: column; gap: 1rem; }
+            .ai-search-box { flex-direction: column; }
+            .company-header { flex-direction: column; }
+            .intent-score { margin-top: 1rem; }
         }
     </style>
 </head>
@@ -489,17 +600,48 @@
             <div class="logo">
                 <div class="logo-icon"></div>
                 <div class="logo-text">Altitude<span>AI</span></div>
+                <span class="ai-badge">AI-Powered</span>
             </div>
             <nav class="nav-links">
                 <a href="#">Dashboard</a>
                 <a href="#">Companies</a>
                 <a href="#">Signals</a>
+                <a href="#">AI Insights</a>
             </nav>
         </div>
     </header>
 
     <main class="container">
-        <!-- Stats Grid -->
+        <!-- AI Search -->
+        <div class="ai-search-section">
+            <div class="ai-search-title">
+                🤖 AI Search
+            </div>
+            <div class="ai-search-box">
+                <input type="text" class="ai-search-input" id="ai-search-input" 
+                       placeholder="Try: 'high intent manufacturing companies in Michigan' or 'companies hiring network engineers'">
+                <button class="ai-search-btn" onclick="aiSearch()">
+                    <span>Search with AI</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- AI Insights -->
+        <div class="ai-insights-section" id="ai-insights">
+            <div class="ai-insights-header">
+                <div class="ai-insights-title">
+                    ⚡ AI-Generated Market Insights
+                </div>
+            </div>
+            <div id="insights-list">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>AI analyzing market data...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-label">Total Companies</div>
@@ -509,13 +651,13 @@
                 <div class="stat-label">Active Signals</div>
                 <div class="stat-value" id="stat-signals">-</div>
             </div>
-            <div class="stat-card hiring">
-                <div class="stat-label">Hiring Signals</div>
-                <div class="stat-value" id="stat-hiring">-</div>
+            <div class="stat-card ai-score">
+                <div class="stat-label">Avg Buying Intent</div>
+                <div class="stat-value" id="stat-avg-intent">-</div>
             </div>
-            <div class="stat-card contracts">
-                <div class="stat-label">Contract Awards</div>
-                <div class="stat-value" id="stat-contracts">-</div>
+            <div class="stat-card hiring">
+                <div class="stat-label">High Intent (70+)</div>
+                <div class="stat-value" id="stat-high-intent">-</div>
             </div>
         </div>
 
@@ -545,18 +687,17 @@
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label>Signal Type</label>
-                    <select id="filter-signal">
-                        <option value="">All Signals</option>
-                        <option value="hiring">Hiring</option>
-                        <option value="contract">Contract</option>
-                        <option value="expansion">Expansion</option>
-                        <option value="tech_mention">Tech Mention</option>
+                    <label>Min AI Intent Score</label>
+                    <select id="filter-intent">
+                        <option value="">Any Score</option>
+                        <option value="70">70+ (High)</option>
+                        <option value="50">50+ (Medium)</option>
+                        <option value="30">30+ (Low)</option>
                     </select>
                 </div>
                 <div class="filter-group" style="display: flex; align-items: end;">
                     <button class="btn btn-primary" onclick="applyFilters()">
-                        Search Companies
+                        Apply Filters
                     </button>
                 </div>
             </div>
@@ -565,13 +706,13 @@
         <!-- Results -->
         <div class="results-section">
             <div class="results-header">
-                <h2 class="results-title">Companies</h2>
+                <h2 class="results-title">AI-Prioritized Companies</h2>
                 <span class="results-count" id="results-count">Loading...</span>
             </div>
             <div class="company-list" id="company-list">
                 <div class="loading">
                     <div class="spinner"></div>
-                    <p>Loading companies...</p>
+                    <p>AI ranking companies...</p>
                 </div>
             </div>
         </div>
@@ -584,10 +725,31 @@
                 const stats = await response.json();
                 document.getElementById('stat-companies').textContent = stats.total_companies;
                 document.getElementById('stat-signals').textContent = stats.total_signals;
-                document.getElementById('stat-hiring').textContent = stats.hiring_signals;
-                document.getElementById('stat-contracts').textContent = stats.contract_signals;
+                document.getElementById('stat-high-intent').textContent = stats.high_intent_companies;
+                document.getElementById('stat-avg-intent').textContent = stats.avg_buying_intent + '%';
             } catch (error) {
                 console.error('Error loading stats:', error);
+            }
+        }
+
+        async function loadAIInsights() {
+            try {
+                const response = await fetch('/api/ai-insights');
+                const insights = await response.json();
+                
+                const container = document.getElementById('insights-list');
+                container.innerHTML = insights.map(insight => `
+                    <div class="ai-insight-item">
+                        <div class="ai-insight-type">${insight.insight_type}</div>
+                        <div class="ai-insight-title">${insight.title}</div>
+                        <div class="ai-insight-desc">${insight.description}</div>
+                        <div class="ai-confidence">
+                            ✓ AI Confidence: ${Math.round(insight.confidence * 100)}%
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading AI insights:', error);
             }
         }
 
@@ -627,12 +789,12 @@
                 const state = document.getElementById('filter-state').value;
                 const industry = document.getElementById('filter-industry').value;
                 const size = document.getElementById('filter-size').value;
-                const signalType = document.getElementById('filter-signal').value;
+                const minIntent = document.getElementById('filter-intent').value;
                 
                 if (state) params.append('state', state);
                 if (industry) params.append('industry', industry);
                 if (size) params.append('size', size);
-                if (signalType) params.append('signal_type', signalType);
+                if (minIntent) params.append('min_intent', minIntent);
                 
                 const response = await fetch(`/api/companies?${params}`);
                 const companies = await response.json();
@@ -640,13 +802,29 @@
                 renderCompanies(companies);
             } catch (error) {
                 console.error('Error loading companies:', error);
-                document.getElementById('company-list').innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">⚠️</div>
-                        <h3>Error loading companies</h3>
-                        <p>Please try again later</p>
-                    </div>
-                `;
+            }
+        }
+
+        async function aiSearch() {
+            const query = document.getElementById('ai-search-input').value;
+            if (!query) return;
+            
+            try {
+                const response = await fetch('/api/search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query })
+                });
+                
+                const data = await response.json();
+                
+                alert(`AI Interpretation: ${data.ai_interpretation}\n\nFound ${data.results.length} matching companies`);
+                
+                if (data.results.length > 0) {
+                    renderCompanies(data.results.map(r => r.company));
+                }
+            } catch (error) {
+                console.error('AI search error:', error);
             }
         }
 
@@ -654,12 +832,12 @@
             const container = document.getElementById('company-list');
             const countElement = document.getElementById('results-count');
             
-            countElement.textContent = `${companies.length} companies found`;
+            countElement.textContent = `${companies.length} companies found (AI-ranked by buying intent)`;
             
             if (companies.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-icon">🔍</div>
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
                         <h3>No companies found</h3>
                         <p>Try adjusting your filters</p>
                     </div>
@@ -670,54 +848,74 @@
             container.innerHTML = companies.map(company => `
                 <div class="company-card">
                     <div class="company-header">
-                        <div>
+                        <div class="company-main">
                             <div class="company-name">${company.name}</div>
                             <div class="company-meta">
                                 <span>📍 ${company.city}, ${company.state}</span>
                                 <span>🏢 ${company.industry}</span>
-                                <span>👥 ${company.size} employees</span>
+                                <span>👥 ${company.size}</span>
                                 <span>💰 ${company.revenue}</span>
                             </div>
+                            
+                            ${company.ai_summary ? `
+                                <div class="ai-summary">
+                                    <div class="ai-summary-label">🤖 AI Analysis</div>
+                                    <div class="ai-summary-text">${company.ai_summary}</div>
+                                </div>
+                            ` : ''}
+                            
+                            ${company.recommended_action ? `
+                                <div class="ai-recommendation">
+                                    ${company.recommended_action}
+                                </div>
+                            ` : ''}
+                            
+                            <div class="signal-badges">
+                                ${company.signals.map(s => `
+                                    <span class="signal-badge ${s.signal_type}">${s.signal_type}</span>
+                                `).join('')}
+                            </div>
+                            
+                            ${company.signals.length > 0 ? `
+                                <div class="signals-list">
+                                    ${company.signals.map(signal => `
+                                        <div class="signal-item">
+                                            <div class="signal-type-icon ${signal.signal_type}">
+                                                ${getSignalIcon(signal.signal_type)}
+                                            </div>
+                                            <div class="signal-content">
+                                                <div>${signal.description}</div>
+                                                <div class="signal-source">Source: ${signal.source}</div>
+                                                ${signal.ai_extracted_insight ? `
+                                                    <div class="ai-extracted">💡 AI: ${signal.ai_extracted_insight}</div>
+                                                ` : ''}
+                                            </div>
+                                            <div class="confidence-score">
+                                                <div class="confidence-bar">
+                                                    <div class="confidence-fill" style="width: ${(signal.confidence_score * 100)}%"></div>
+                                                </div>
+                                                <span>${Math.round(signal.confidence_score * 100)}%</span>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            ` : ''}
                         </div>
-                        <div class="signal-badges">
-                            ${company.signals.map(s => `
-                                <span class="signal-badge ${s.signal_type}">${s.signal_type}</span>
-                            `).join('')}
+                        
+                        <div class="intent-score">
+                            <div class="intent-value">${company.buying_intent_score || '--'}</div>
+                            <div class="intent-label">AI Intent Score</div>
+                            <div class="intent-bar">
+                                <div class="intent-fill" style="width: ${company.buying_intent_score || 0}%"></div>
+                            </div>
                         </div>
                     </div>
-                    
-                    ${company.signals.length > 0 ? `
-                        <div class="signals-list">
-                            ${company.signals.map(signal => `
-                                <div class="signal-item">
-                                    <div class="signal-type-icon ${signal.signal_type}">
-                                        ${getSignalIcon(signal.signal_type)}
-                                    </div>
-                                    <div class="signal-content">
-                                        <div>${signal.description}</div>
-                                        <div class="signal-source">Source: ${signal.source}</div>
-                                    </div>
-                                    <div class="confidence-score">
-                                        <div class="confidence-bar">
-                                            <div class="confidence-fill" style="width: ${(signal.confidence_score * 100)}%"></div>
-                                        </div>
-                                        <span>${Math.round(signal.confidence_score * 100)}%</span>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    ` : ''}
                 </div>
             `).join('');
         }
 
         function getSignalIcon(type) {
-            const icons = {
-                'hiring': '👥',
-                'contract': '📄',
-                'expansion': '🏗️',
-                'tech_mention': '💻'
-            };
+            const icons = { 'hiring': '👥', 'contract': '📄', 'expansion': '🏗️', 'tech_mention': '💻' };
             return icons[type] || '📊';
         }
 
@@ -725,8 +923,13 @@
             loadCompanies();
         }
 
+        document.getElementById('ai-search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') aiSearch();
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
             loadStats();
+            loadAIInsights();
             loadFilters();
             loadCompanies();
         });
