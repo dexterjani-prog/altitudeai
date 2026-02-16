@@ -5,14 +5,26 @@ import os
 
 app = Flask(__name__)
 
-# Use PostgreSQL if available, fallback to SQLite
+# Database configuration - supports both PostgreSQL and SQLite
 database_url = os.environ.get('DATABASE_URL')
-if database_url and database_url.startswith('postgres://'):
-    # Railway uses postgres:// but SQLAlchemy needs postgresql://
-    database_url = database_url.replace('postgres://', 'postgresql://', 1)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = database_url or 'sqlite:///altitudeai.db'
+if database_url:
+    # Railway provides postgres:// but SQLAlchemy needs postgresql://
+    if database_url.startswith('postgres://'):
+        database_url = database_url.replace('postgres://', 'postgresql+pg8000://', 1)
+    elif database_url.startswith('postgresql://'):
+        database_url = database_url.replace('postgresql://', 'postgresql+pg8000://', 1)
+else:
+    # Fallback to SQLite for local development
+    database_url = 'sqlite:///app.db'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_pre_ping': True,  # Verify connections before using
+    'pool_recycle': 300,    # Recycle connections after 5 minutes
+}
+
 db = SQLAlchemy(app)
 
 class Company(db.Model):
