@@ -734,7 +734,7 @@
     <div class="insights-section">
         <div class="section-header">
             <div class="section-title">AI Market Insights</div>
-            <div class="section-badge badge-purple">Auto-Generated</div>
+            <div class="section-badge badge-purple" id="insights-scope-badge">Full Database</div>
         </div>
         <div class="insights-grid" id="insights-grid">
             <div class="loading-state" style="grid-column:1/-1">
@@ -802,36 +802,44 @@
 </main>
 
 <script>
-const ICONS = {
-    hiring: '👥',
-    contract: '📄',
-    expansion: '🏗️',
-    tech_mention: '💻'
-};
+const ICONS = { hiring:'👥', contract:'📄', expansion:'🏗️', tech_mention:'💻' };
 
-function intentClass(score) {
-    if (score >= 70) return 'high';
-    if (score >= 45) return 'medium';
-    return 'low';
-}
+function intentClass(s) { return s >= 70 ? 'high' : s >= 45 ? 'medium' : 'low'; }
 
 // ── Stats ──────────────────────────────────
 async function loadStats() {
-    const res = await fetch('/api/stats');
-    const d = await res.json();
-    document.getElementById('stat-companies').textContent = d.total_companies;
-    document.getElementById('stat-signals').textContent = d.total_signals;
+    const d = await fetch('/api/stats').then(r => r.json());
+    document.getElementById('stat-companies').textContent  = d.total_companies;
+    document.getElementById('stat-signals').textContent    = d.total_signals;
     document.getElementById('stat-avg-intent').textContent = d.avg_buying_intent + '%';
     document.getElementById('stat-high-intent').textContent = d.high_intent_companies;
 }
 
-// ── AI Insights ────────────────────────────
-async function loadInsights() {
-    const res = await fetch('/api/ai-insights');
-    const insights = await res.json();
-    const grid = document.getElementById('insights-grid');
+// ── AI Insights (context-aware) ────────────
+async function loadInsights(params = {}, scopeLabel = 'Full Database') {
+    const grid  = document.getElementById('insights-grid');
+    const badge = document.getElementById('insights-scope-badge');
+
+    // Show re-analysis animation
+    badge.textContent = '⟳ Re-analyzing…';
+    badge.style.background = '#fef3c7';
+    badge.style.color = '#92400e';
+    grid.innerHTML = `
+        <div class="loading-state" style="grid-column:1/-1;padding:1.5rem">
+            <div class="spinner" style="width:28px;height:28px;border-width:2px"></div>
+            <p style="font-size:0.8rem;margin-top:0.5rem">AI re-analysing for: <strong>${scopeLabel}</strong>…</p>
+        </div>`;
+
+    const qs = new URLSearchParams({ ...params, scope_label: scopeLabel });
+    const insights = await fetch('/api/ai-insights?' + qs).then(r => r.json());
+
+    // Update badge
+    badge.textContent = scopeLabel;
+    badge.style.background = '';
+    badge.style.color = '';
+
     grid.innerHTML = insights.map(i => `
-        <div class="insight-card">
+        <div class="insight-card" style="animation:fadeIn 0.35s ease both">
             <div class="insight-type">${i.insight_type}</div>
             <div class="insight-title">${i.title}</div>
             <div class="insight-desc">${i.description}</div>
@@ -862,38 +870,48 @@ async function loadCompanies(params = {}) {
             <p style="font-size:0.85rem">AI ranking by buying intent…</p>
         </div>`;
     document.getElementById('results-meta').textContent = 'Loading…';
-
-    const qs = new URLSearchParams(params);
-    const res = await fetch('/api/companies?' + qs);
-    const companies = await res.json();
+    const companies = await fetch('/api/companies?' + new URLSearchParams(params)).then(r => r.json());
     renderCompanies(companies);
 }
 
 function applyFilters() {
-    const params = {};
-    const state = document.getElementById('f-state').value;
+    const state    = document.getElementById('f-state').value;
     const industry = document.getElementById('f-industry').value;
-    const size = document.getElementById('f-size').value;
-    const intent = document.getElementById('f-intent').value;
-    if (state) params.state = state;
+    const size     = document.getElementById('f-size').value;
+    const intent   = document.getElementById('f-intent').value;
+
+    const params = {};
+    if (state)    params.state    = state;
     if (industry) params.industry = industry;
-    if (size) params.size = size;
-    if (intent) params.min_intent = intent;
+    if (size)     params.size     = size;
+    if (intent)   params.min_intent = intent;
+
+    // Build a human-readable scope label for the insights badge
+    const parts = [];
+    if (state)    parts.push(state);
+    if (industry) parts.push(industry);
+    if (intent)   parts.push(`Intent ≥ ${intent}`);
+    if (size)     parts.push(`${size} employees`);
+    const scopeLabel = parts.length ? parts.join(' · ') : 'Full Database';
+
+    // Reload both panels together
     loadCompanies(params);
+    loadInsights(params, scopeLabel);
 }
 
 function renderCompanies(companies) {
     const list = document.getElementById('company-list');
-    const meta = document.getElementById('results-meta');
-    meta.textContent = `${companies.length} companies · sorted by AI intent score`;
+    document.getElementById('results-meta').textContent =
+        `${companies.length} companies · sorted by AI intent score`;
 
     if (!companies.length) {
-        list.innerHTML = `<div class="empty-state">🔍 No companies match these filters — try adjusting criteria.</div>`;
+        list.innerHTML = `<div class="empty-state">🔍 No companies match — try adjusting filters.</div>`;
         return;
     }
 
     list.innerHTML = companies.map(c => {
         const cls = intentClass(c.buying_intent_score);
+
         const badgesHTML = c.signals.map(s =>
             `<span class="signal-badge ${s.signal_type}">${s.signal_type.replace('_',' ')}</span>`
         ).join('');
@@ -907,13 +925,10 @@ function renderCompanies(companies) {
                     <div class="signal-ai-insight">💡 AI: ${s.ai_extracted_insight}</div>
                 </div>
                 <div class="confidence-col">
-                    <div class="conf-bar">
-                        <div class="conf-fill" style="width:${Math.round(s.confidence_score * 100)}%"></div>
-                    </div>
-                    <span>${Math.round(s.confidence_score * 100)}%</span>
+                    <div class="conf-bar"><div class="conf-fill" style="width:${Math.round(s.confidence_score*100)}%"></div></div>
+                    <span>${Math.round(s.confidence_score*100)}%</span>
                 </div>
-            </div>
-        `).join('');
+            </div>`).join('');
 
         return `
         <div class="company-card">
@@ -926,19 +941,14 @@ function renderCompanies(companies) {
                         <span>👥 ${c.size} employees</span>
                         <span>💰 ${c.revenue}</span>
                     </div>
-
                     <div class="ai-summary">
                         <div class="ai-summary-label">🤖 AI Analysis</div>
                         <div class="ai-summary-text">${c.ai_summary}</div>
                     </div>
-
                     <div class="ai-recommendation">${c.recommended_action}</div>
-
                     <div class="badge-row">${badgesHTML}</div>
-
                     ${c.signals.length ? `<div class="signals-list">${signalsHTML}</div>` : ''}
                 </div>
-
                 <div class="intent-box">
                     <div class="intent-number ${cls}">${c.buying_intent_score}</div>
                     <div class="intent-label">AI Intent</div>
@@ -956,26 +966,28 @@ async function runAISearch() {
     const query = document.getElementById('ai-input').value.trim();
     if (!query) return;
 
-    const statusEl = document.getElementById('ai-status');
+    const statusEl   = document.getElementById('ai-status');
     const statusText = document.getElementById('ai-status-text');
     statusEl.classList.add('visible');
     statusText.textContent = `AI processing: "${query}"…`;
 
+    // Kick off insights re-analysis with query context immediately
+    loadInsights({ query }, `Search: "${query}"`);
+
     try {
-        const res = await fetch('/api/search', {
+        const data = await fetch('/api/search', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ query })
-        });
-        const data = await res.json();
+        }).then(r => r.json());
 
         statusText.textContent = `✓ ${data.ai_interpretation}`;
-        setTimeout(() => statusEl.classList.remove('visible'), 4000);
+        setTimeout(() => statusEl.classList.remove('visible'), 5000);
 
         renderCompanies(data.results.map(r => r.company));
         document.getElementById('results-meta').textContent =
-            `${data.total} results for AI search · "${query}"`;
-    } catch (err) {
+            `${data.total} results · AI search for "${query}"`;
+    } catch(err) {
         statusText.textContent = 'Search failed — please try again.';
         setTimeout(() => statusEl.classList.remove('visible'), 3000);
     }
@@ -990,10 +1002,15 @@ document.getElementById('ai-input').addEventListener('keydown', e => {
     if (e.key === 'Enter') runAISearch();
 });
 
+// ── Add fade-in keyframe ────────────────────
+const style = document.createElement('style');
+style.textContent = `@keyframes fadeIn { from { opacity:0; transform:translateY(6px) } to { opacity:1; transform:none } }`;
+document.head.appendChild(style);
+
 // ── Init ───────────────────────────────────
 (async () => {
-    await Promise.all([loadStats(), loadInsights(), loadFilters()]);
-    loadCompanies();
+    await Promise.all([loadStats(), loadFilters()]);
+    await Promise.all([loadCompanies(), loadInsights({}, 'Full Database')]);
 })();
 </script>
 </body>
